@@ -3,43 +3,280 @@
 {% block head_title %}Banking System{% endblock %}
 
 {% block content %}
-{% if form.non_field_errors %}
-    {% for error in form.non_field_errors %}
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
-            <p class="font-bold">Error!</p>
-            <p class="block sm:inline">{{ error }}</p>
-        </div>
-    {% endfor %}
-{% endif %}
-<h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Sign In</h1>
-<hr>
-<div class="w-full mt-10">
-    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        {% csrf_token %}
-        {% for hidden_field in form.hidden_fields %}
-            {{ hidden_field.errors }}
-            {{ hidden_field }}
-        {% endfor %}
-        {% for field in form.visible_fields %}
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
-                {{ field.label }}
-            </label>
-            <input class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}">
-        </div>
-            {% if field.errors %}
-                {% for error in field.errors %}
-                <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
-                {% endfor %}
+
+<div class="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden">
+
+    <!-- Background 3D Glow -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-600/30 rounded-full blur-3xl"></div>
+
+    <!-- Floating Shapes -->
+    <div class="absolute top-20 right-10 w-20 h-20 bg-blue-500/10 border border-blue-400/20 rounded-2xl rotate-12 backdrop-blur-sm"></div>
+    <div class="absolute bottom-20 left-10 w-24 h-24 bg-purple-500/10 border border-purple-400/20 rounded-full backdrop-blur-sm"></div>
+
+    <!-- Main Card -->
+    <div class="relative w-full max-w-md">
+
+        <!-- Card Glow -->
+        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 rounded-3xl blur opacity-30"></div>
+
+        <!-- 3D Card -->
+        <div class="relative bg-slate-900/90 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.55)] px-8 py-10 sm:px-10">
+
+            <!-- Logo / Icon -->
+            <div class="flex justify-center mb-7">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center shadow-[0_15px_35px_rgba(37,99,235,0.4)] rotate-3">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-10 h-10 text-white -rotate-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 10h18M5 10v8m4-8v8m6-8v8m4-8v8M3 18h18M12 3l9 5H3l9-5z"
+                        />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Heading -->
+            <div class="text-center mb-8">
+                <p class="text-blue-400 text-xs font-semibold uppercase tracking-[0.3em] mb-2">
+                    Banking System
+                </p>
+
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Welcome Back
+                </h1>
+
+                <p class="text-slate-400 text-sm mt-3">
+                    Sign in to securely access your account
+                </p>
+            </div>
+
+            <!-- Non Field Errors -->
+            {% if form.non_field_errors %}
+                <div class="mb-6 space-y-2">
+                    {% for error in form.non_field_errors %}
+                        <div
+                            class="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl"
+                            role="alert"
+                        >
+                            <div class="flex items-start gap-3">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5 mt-0.5 flex-shrink-0"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 9v2m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z"
+                                    />
+                                </svg>
+
+                                <div>
+                                    <p class="font-semibold text-sm">Authentication Error</p>
+                                    <p class="text-sm mt-1">{{ error }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
-        {% endfor %}
 
-        <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Sign In
-            </button>
+            <!-- Form -->
+            <form method="post" class="space-y-6">
+
+                {% csrf_token %}
+
+                <!-- Hidden Fields -->
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+
+                <!-- Visible Fields -->
+                {% for field in form.visible_fields %}
+
+                    <div>
+
+                        <!-- Label -->
+                        <label
+                            class="block text-sm font-semibold text-slate-300 mb-2"
+                            for="{{ field.id_for_label }}"
+                        >
+                            {{ field.label }}
+                        </label>
+
+                        <!-- Input Wrapper -->
+                        <div class="relative group">
+
+                            <!-- Input Icon -->
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                {% if field.widget_type == 'password' %}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-5 h-5 text-slate-500 group-focus-within:text-blue-400 transition"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.8"
+                                            d="M12 15v2m-6 3h12a2 2 0 002-2v-5a2 2 0 00-2-2H6a2 2 0 00-2 2v5a2 2 0 002 2zm10-9V7a4 4 0 00-8 0v2h8z"
+                                        />
+                                    </svg>
+                                {% else %}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-5 h-5 text-slate-500 group-focus-within:text-blue-400 transition"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.8"
+                                            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm6 0a10 10 0 11-20 0 10 10 0 0120 0z"
+                                        />
+                                    </svg>
+                                {% endif %}
+                            </div>
+
+                            <!-- Django Input -->
+                            <input
+                                class="w-full bg-slate-800/80 border border-slate-700
+                                       text-white placeholder-slate-500
+                                       rounded-xl py-3.5 pl-12 pr-4
+                                       outline-none
+                                       transition-all duration-300
+                                       shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]
+                                       focus:border-blue-500
+                                       focus:ring-2 focus:ring-blue-500/20
+                                       focus:bg-slate-800
+                                       focus:shadow-[0_0_25px_rgba(59,130,246,0.12)]"
+                                name="{{ field.name }}"
+                                id="{{ field.id_for_label }}"
+                                type="{{ field.widget_type }}"
+                                {% if field.value and field.widget_type != 'password' %}
+                                    value="{{ field.value }}"
+                                {% endif %}
+                                {% if field.field.required %}
+                                    required
+                                {% endif %}
+                            >
+
+                        </div>
+
+                        <!-- Field Errors -->
+                        {% if field.errors %}
+                            <div class="mt-2 space-y-1">
+                                {% for error in field.errors %}
+                                    <p class="text-red-400 text-xs flex items-center gap-1.5">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            />
+                                        </svg>
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+                <!-- Submit Button -->
+                <button
+                    class="group relative w-full mt-3 overflow-hidden
+                           bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
+                           hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500
+                           text-white font-bold
+                           py-3.5 px-6
+                           rounded-xl
+                           shadow-[0_12px_30px_rgba(37,99,235,0.35)]
+                           hover:shadow-[0_16px_40px_rgba(37,99,235,0.45)]
+                           active:translate-y-1
+                           transition-all duration-200"
+                    type="submit"
+                >
+
+                    <!-- Shine -->
+                    <span
+                        class="absolute inset-0 -translate-x-full
+                               group-hover:translate-x-full
+                               transition-transform duration-700
+                               bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    ></span>
+
+                    <span class="relative flex items-center justify-center gap-2">
+                        Sign In
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                        </svg>
+                    </span>
+
+                </button>
+
+            </form>
+
+            <!-- Security Footer -->
+            <div class="flex items-center justify-center gap-2 mt-7 text-slate-500 text-xs">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-4 h-4 text-emerald-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 15v2m-6 3h12a2 2 0 002-2v-5a2 2 0 00-2-2H6a2 2 0 00-2 2v5a2 2 0 002 2zm10-9V7a4 4 0 00-8 0v2h8z"
+                    />
+                </svg>
+
+                <span>Secure & encrypted banking</span>
+            </div>
+
         </div>
-    </form>
-</div>
-{% endblock %}
+    </div>
 
+</div>
+
+{% endblock %}
