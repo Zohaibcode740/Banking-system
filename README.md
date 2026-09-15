@@ -1,8 +1,9 @@
 # Online Banking System 
 
 This is an Online Banking Concept created using Django Web Framework.
+## Work flow 
 
-
+![logo](https://github.com/Zohaibcode740/Banking-system/blob/main/image_f5180f80.jpg)
 ## Features
 
 * Create Bank Account.
